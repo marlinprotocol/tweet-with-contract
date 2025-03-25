@@ -1,0 +1,33 @@
+services:
+  twitter_agent_service:
+    image: sagarparker/twitter_agent_service_amd64:latest
+    init: true
+    restart: unless-stopped
+    network_mode: host
+    command: ["/opt/venv/bin/python", "/app/x_agent.py"]
+    volumes:
+      - /init-params/:/init-params/
+      - shared_data:/app/shared_data
+    env_file:
+      - /init-params/.env
+  verifier:
+    image: sagarparker/twitter_agent_service_amd64:latest
+    init: true
+    restart: unless-stopped
+    network_mode: host
+    command: ["/opt/venv/bin/python", "/app/verifier.py"]
+    volumes:
+      - /init-params/:/init-params/
+      - shared_data:/app/shared_data
+    env_file:
+      - /init-params/.env
+  tweet_with_contract:
+    image: sagarparker/tweet_with_contract:latest
+    init: true
+    restart: unless-stopped
+    network_mode: host
+    env_file:
+      - /init-params/.env.twc
+    
+volumes:
+  shared_data:
