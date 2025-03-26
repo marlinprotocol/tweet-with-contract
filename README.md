@@ -19,25 +19,36 @@ This application listens for events emitted by the `TweetWithOysterAgentService`
 
 ## Environment Setup
 
-### 1. Twitter Agent Service `.env` File
+### 1. Create environment variables files with all the required details for the twitter agent service
 
-Create a `.env` file for the Twitter Agent Service with the following variables:
+   ### .env
+   ```
+   USERNAME=
+   USER_EMAIL=
+   X_APP_NAME=
+   KMS_ENDPOINT=http://kms_imitator:1100
+   AGENT_HOST=0.0.0.0
+   ```
 
-```plaintext
-OPENAI_API_KEY=
-USER_PASSWORD=
-USERNAME=
-USER_EMAIL=
-USER_EMAIL_PASSWORD=
-X_APP_NAME=
-```
+   ### .env.secrets
+   ```
+   OPENAI_API_KEY=
+   USER_PASSWORD=
+   USER_EMAIL_PASSWORD=
+   ```
 
-### 2. Tweet With Contract `.env` File
-Create a `.env.twc` file for the Tweet With Contract application with the following variables:
+### 2. Create environment variables files with all the required details for the tweet with contract application service
+
+
+### .env.twc 
 ```plaintext
 CONTRACT_ADDRESS=
-RPC_URL=
 PORT=
+```
+
+### .env.twc.secrets
+```plaintext
+RPC_URL=
 ```
 
 ## Deployment Steps
@@ -45,13 +56,13 @@ PORT=
 ### Deploy the Application Using Oyster CVM using the following commands
 Debug mode:
 ```bash
-oyster-cvm deploy --wallet-private-key *** --pcr-preset base/blue/v1.0.0/amd64 --duration-in-minutes 60 --debug --no-stream --docker-compose docker-compose.yml --operator *** --instance-type r6i.xlarge --image-url https://artifacts.marlin.org/oyster/eifs/base-blue_v1.0.0_linux_amd64.eif --init-params ".env:0:1:file:.env" --init-params ".env.twc:0:0:file:.env.twc"
+oyster-cvm deploy --wallet-private-key *** --pcr-preset base/blue/v1.0.0/amd64 --duration-in-minutes 60 --debug --no-stream --docker-compose docker-compose.yml --operator *** --instance-type r6i.xlarge --image-url https://artifacts.marlin.org/oyster/eifs/base-blue_v1.0.0_linux_amd64.eif --init-params ".env:0:0:file:.env" --init-params ".env.secrets:0:0:file:.env.secrets" --init-params ".env.twc:0:0:file:.env.twc" --init-params ".env.twc.secrets:0:0:file:.env.twc.secrets"
 ```
 
 
 Production mode:
 ```bash
-oyster-cvm deploy --wallet-private-key *** --pcr-preset base/blue/v1.0.0/amd64 --duration-in-minutes 60 --docker-compose docker-compose.yml --operator *** --instance-type r6i.xlarge --image-url https://artifacts.marlin.org/oyster/eifs/base-blue_v1.0.0_linux_amd64.eif --init-params ".env:0:1:file:.env" --init-params ".env.twc:0:1:file:.env.twc"
+oyster-cvm deploy --wallet-private-key *** --pcr-preset base/blue/v1.0.0/amd64 --duration-in-minutes 60 --docker-compose docker-compose.yml --operator *** --instance-type r6i.xlarge --image-url https://artifacts.marlin.org/oyster/eifs/base-blue_v1.0.0_linux_amd64.eif --init-params ".env:1:0:file:.env" --init-params ".env.secrets:1:0:file:.env.secrets" --init-params ".env.twc:0:1:file:.env.twc" --init-params ".env.twc.secrets:0:1:file:.env.twc.secrets"
 ```
 
 ## Usage

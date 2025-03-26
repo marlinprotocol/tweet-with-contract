@@ -10,6 +10,7 @@ services:
       - shared_data:/app/shared_data
     env_file:
       - /init-params/.env
+      - /init-params/.env.secrets
   verifier:
     image: sagarparker/twitter_agent_service_amd64:latest
     init: true
@@ -21,6 +22,7 @@ services:
       - shared_data:/app/shared_data
     env_file:
       - /init-params/.env
+      - /init-params/.env.secrets
   tweet_with_contract:
     image: sagarparker/tweet_with_contract:latest
     init: true
@@ -28,6 +30,7 @@ services:
     network_mode: host
     env_file:
       - /init-params/.env.twc
+      - /init-params/.env.twc.secrets
     
 volumes:
   shared_data:

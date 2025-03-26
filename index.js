@@ -5,6 +5,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 
 dotenv.config({path: '.env.twc'});
+dotenv.config({path: '.env.twc.secrets'});
 
 const app = express();
 
